@@ -8,7 +8,7 @@ export type ChartPoint = {
   ts: number; 
   value: number;
 };
-
+ const ZERO = BigInt(0);
 type TokenTx = {
   timeStamp: string;
   from: string;
@@ -18,6 +18,7 @@ type TokenTx = {
 
 function requireEnv(name: string): string {
   const v = process.env[name];
+
   if (!v) throw new Error(`Missing env: ${name}`);
   return v;
 }
@@ -64,8 +65,8 @@ function bucketsCount(range: TimeRange): number {
 }
 
 function safeParseBigInt(value: string): bigint {
-  if (!value) return 0n;
-  if (!/^\d+$/.test(value)) return 0n;
+  if (!value) return ZERO;
+  if (!/^\d+$/.test(value)) return ZERO;
   return BigInt(value);
 }
 
@@ -135,30 +136,30 @@ function buildSeriesFromTransfers(
   const { start, step, count } = buildBuckets(range);
   const addr = toLower(address);
 
-  const deltas: bigint[] = Array.from({ length: count }, () => 0n);
+  const deltas: bigint[] = Array.from({ length: count }, () => ZERO);
 
   for (const tx of transfers) {
     const tsMs = Number(tx.timeStamp) * 1000;
     if (!Number.isFinite(tsMs) || tsMs < start) continue;
 
     const v = safeParseBigInt(tx.value);
-    if (v === 0n) continue;
+    if (v === ZERO) continue;
 
     const from = toLower(tx.from);
     const to = toLower(tx.to);
 
-    let signed = 0n;
+    let signed = ZERO;
     if (from === addr) signed -= v;
     if (to === addr) signed += v;
 
-    if (signed === 0n) continue;
+    if (signed === ZERO) continue;
 
     const idx = clampToBuckets(tsMs, start, step, count);
     deltas[idx] += signed;
   }
 
   const points: ChartPoint[] = [];
-  let acc = 0n;
+  let acc = ZERO;
 
   for (let i = 0; i < count; i++) {
     acc += deltas[i];
