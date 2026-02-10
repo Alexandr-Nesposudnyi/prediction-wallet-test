@@ -1,56 +1,55 @@
 Prediction Wallet
 
-Небольшой wallet-dashboard.
-Основная идея показать архитектуру, работу с server actions, график и UI-логику.
+A small wallet dashboard.
+The main idea is to demonstrate the architecture, working with server actions, the graph, and UI logic.
 Next.js (App Router) + TypeScript
-server/client компоненты разделены
-все данные и действия идут через server actions
-баланс и история токена берутся из Etherscan
-график с таймфреймами, hover, датами и анимацией чисел
-серверное кеширование графика на 60 секунд (по publicKey + таймфрейму)
-кнопки с анимациями (hover/tap)
-реализованы флоу депозита и вывода
-Депозит и вывод сделаны полностью по флоу:
-UI -> server action -> результат транзакции.
-Подписание транзакций сейчас замокано и возвращается tx hash.# Prediction Wallet
-Небольшой wallet-dashboard, сделанный как демонстрационный проект.
-Основная цель показать архитектуру приложения, работу с server actions, графиком и UI-логикой.  
-Проект обран на Next.js (App Router) с использованием TypeScript.
-## Общая идея и архитектура
-- Server и client компоненты чётко разделены
-- Все данные и пользовательские действия проходят через server actions
-- Архитектура соответствует продакшн подходу и при необходимости позволяет без изменений UI подключить реальные on-chain транзакции (например, на testnet)
-Баланс и история токена загружаются через Etherscan API.
-## Функциональность
-- График с таймфреймами, hover-состояниями, датами и анимацией чисел  
-  Данные графика кешируются на сервере на 60 секунд (по publicKey + таймфрейму)
-- Кнопки с hover/tap анимациями
-- Реализованы флоу депозита и вывода:
-  UI → server action → результат транзакции
-Подписание транзакций сейчас замокано и возвращает tx hash.  
-Реальный private key не подключался, так как явного требования для этого в тестовом задании не было.
+separate server/client components
+All data and actions are handled through server actions
+Token balance and history are taken from Etherscan
+Graph with timeframes, hover, dates, and number animations
+Server-side graph caching for 60 seconds (by publicKey + timeframe)
+Buttons with animations (hover/tap)
+Deposit and withdrawal flows are implemented
+Deposits and withdrawals are handled entirely through the following flow:
+UI -> server action -> transaction result.
+Transaction signing is currently blocked and returns a TX hash.# Prediction Wallet
+A small wallet dashboard, created as a demo project.
+The main goal is to demonstrate the application architecture, working with server actions, the graph, and UI logic. The project is built on Next.js (App Router) using TypeScript.
+## General Concept and Architecture
+- Server and client components are clearly separated
+- All data and user actions are processed through server actions
+- The architecture is consistent with the production approach and allows for real on-chain transactions (for example, on a testnet) to be integrated without UI changes, if needed.
+Token balance and history are downloaded via the Etherscan API.
+## Functionality
+- Chart with timeframes, hover states, dates, and number animations
+Chart data is cached on the server for 60 seconds (by publicKey + timeframe)
+- Buttons with hover/tap animations
+- Deposit and withdrawal flows are implemented:
+UI → server action → transaction result
+Transaction signing is currently locked and returns a TX hash.
+The real private key was not included because there was no explicit requirement for it in the test task.
 
-## Переменные окружения
+## Environment Variables
 
-Все необходимые переменные перечислены в `.env.example`.
-Основные:
+All necessary variables are listed in `.env.example`.
+Main ones:
 - `WALLET_PUBLIC_KEY`
 - `TOKEN_ADDRESS`
 - `TOKEN_DECIMALS`
 - `ETHERSCAN_API_KEY`
-## Как запустить
+## How to run
 ```bash
 npm install
 npm run dev
- не стал подключать реальный private key без явного требования в тестовом.
-Архитектура при этом такая же, как в проде при необходимости можно быстро подключить реальные on-chain транзакции (например, на testnet), не меняя UI.
-Переменные окружения
-Все необходимые переменные перечислены в .env.example.
-Основные:
+I didn't include the real private key without an explicit requirement in the test task.
+The architecture is the same as in production; if necessary, you can quickly enable real on-chain transactions (for example, on testnet) without changing the UI.
+Environment Variables
+All necessary variables are listed in .env.example.
+Basic:
 WALLET_PUBLIC_KEY
 TOKEN_ADDRESS
 TOKEN_DECIMALS
 ETHERSCAN_API_KEY
-Как запустить
+How to run
 npm install
 npm run dev
