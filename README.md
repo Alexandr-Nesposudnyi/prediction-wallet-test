@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Prediction Wallet
 
-## Getting Started
+Небольшой wallet-dashboard.
+Основная идея показать архитектуру, работу с server actions, график и UI-логику.
+Next.js (App Router) + TypeScript
+server/client компоненты разделены
+все данные и действия идут через server actions
+баланс и история токена берутся из Etherscan
+график с таймфреймами, hover, датами и анимацией чисел
+серверное кеширование графика на 60 секунд (по publicKey + таймфрейму)
+кнопки с анимациями (hover/tap)
+реализованы флоу депозита и вывода
+Депозит и вывод сделаны полностью по флоу:
+UI -> server action -> результат транзакции.
+Подписание транзакций сейчас замокано и возвращается tx hash.# Prediction Wallet
+Небольшой wallet-dashboard, сделанный как демонстрационный проект.
+Основная цель показать архитектуру приложения, работу с server actions, графиком и UI-логикой.  
+Проект обран на Next.js (App Router) с использованием TypeScript.
+## Общая идея и архитектура
+- Server и client компоненты чётко разделены
+- Все данные и пользовательские действия проходят через server actions
+- Архитектура соответствует продакшн подходу и при необходимости позволяет без изменений UI подключить реальные on-chain транзакции (например, на testnet)
+Баланс и история токена загружаются через Etherscan API.
+## Функциональность
+- График с таймфреймами, hover-состояниями, датами и анимацией чисел  
+  Данные графика кешируются на сервере на 60 секунд (по publicKey + таймфрейму)
+- Кнопки с hover/tap анимациями
+- Реализованы флоу депозита и вывода:
+  UI → server action → результат транзакции
+Подписание транзакций сейчас замокано и возвращает tx hash.  
+Реальный private key не подключался, так как явного требования для этого в тестовом задании не было.
 
-First, run the development server:
+## Переменные окружения
 
+Все необходимые переменные перечислены в `.env.example`.
+Основные:
+- `WALLET_PUBLIC_KEY`
+- `TOKEN_ADDRESS`
+- `TOKEN_DECIMALS`
+- `ETHERSCAN_API_KEY`
+## Как запустить
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ не стал подключать реальный private key без явного требования в тестовом.
+Архитектура при этом такая же, как в проде при необходимости можно быстро подключить реальные on-chain транзакции (например, на testnet), не меняя UI.
+Переменные окружения
+Все необходимые переменные перечислены в .env.example.
+Основные:
+WALLET_PUBLIC_KEY
+TOKEN_ADDRESS
+TOKEN_DECIMALS
+ETHERSCAN_API_KEY
+Как запустить
+npm install
+npm run dev
